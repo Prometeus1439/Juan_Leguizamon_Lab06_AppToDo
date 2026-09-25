@@ -59,8 +59,18 @@ public List<TaskResponse> findAll() {
 
     @Override
     public TaskResponse update(Long id, TaskUpdateRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        TaskEntity entity = findEntityOrThrow(id);
+
+        entity.setTitle(request.getTitle());
+        entity.setDescription(request.getDescription());
+        entity.setDueDate(request.getDueDate());
+        entity.setStatus(request.getStatus());
+        entity.setPriority(request.getPriority());
+
+        TaskEntity savedEntity = repository.save(entity);
+
+        return toResponse(savedEntity);
+
     }
 
     @Override

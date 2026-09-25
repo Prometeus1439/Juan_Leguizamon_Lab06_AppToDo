@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 
 public class TaskEntity {
 
+        public TaskEntity() {
+          // TODO document why this constructor is empty
+        }
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -36,9 +40,6 @@ public class TaskEntity {
 
         @Column(name = "created_at", nullable = false)
         private LocalDateTime createdAt;
-
-        public TaskEntity() {
-        }
 
         public Long getId() {
             return id;

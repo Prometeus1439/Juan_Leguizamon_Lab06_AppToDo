@@ -22,16 +22,16 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-public List<TaskResponse> findAll() {
-    return repository.findAll().stream()
-            .map(this::toResponse)
-            .toList();
-}
+    public List<TaskResponse> findAll() {
+        return repository.findAll().stream()
+                .map(this::toResponse)
+                .toList();
+    }
 
     @Override
     public TaskResponse findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        TaskEntity entity = findEntityOrThrow(id);
+        return toResponse(entity);
     }
 
     @Override

@@ -58,7 +58,20 @@ public class TaskServiceTest {
 
     @Test 
     void findById_shouldReturnTaskWhenExists(){
+        // Arrange
+        TaskEntity entity = new TaskEntity();
+        entity.setId(1L);
+        entity.setTitle("Study");
+        entity.setStatus(TaskStatus.PENDING);
+        entity.setPriority(TaskPriority.MEDIUM);
+        when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
+        // Act 
+        TaskResponse response = service.findById(1L);
+
+        // Assert
+        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getTitle()).isEqualTo("Study");
     }
 
     @Test

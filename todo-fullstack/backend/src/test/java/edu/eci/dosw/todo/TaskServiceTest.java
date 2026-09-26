@@ -1,4 +1,4 @@
-package edu.eci.dosw.todo.service;
+package edu.eci.dosw.todo;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,7 +57,7 @@ public class TaskServiceTest {
     }
 
     @Test 
-    void findById_shouldThrowExceptionWhenTaskDoesNotExist(){
+    void findById_shouldReturnTaskWhenExists(){
         // Arrange
         TaskEntity entity = new TaskEntity();
         entity.setId(1L);
@@ -75,7 +75,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    void findById_shouldThrowExceptionWhen(){
+    void findById_shouldThrowExceptionWhenTaskDoesNotExist(){
         // Arrange
         when(repository.findById(99L)).thenReturn(Optional.empty());
 
@@ -87,6 +87,24 @@ public class TaskServiceTest {
 
     @Test 
     void create_shouldCreateTask(){
+        // Arrange
+        TaskCreateRequest request = new TaskCreateRequest("Study", "Class study", TaskPriority.HIGH, LocalDate.of(2026, 9, 30));
+
+        when(repository.save(any(TaskEntity.class))).thenAnswer(invocation -> {
+            TaskEntity entity = invocation.getArgument(0);
+            entity.setId(1L);
+            return entity;
+        });
+
+        // Act
+        TaskResponse response = service.create(request);
+
+        // Assert
+        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getTitle()).isEqualTo("Study");
+        assertThat(response.getDescription()).isEqualTo("Class study");
+        assertThat(response.getPriority()).isEqualTo(TaskPriority.HIGH);
+        assertThat(response.getDueDate()).isEqualTo(LocalDate.of(2026, 9, 30));
 
     }
 

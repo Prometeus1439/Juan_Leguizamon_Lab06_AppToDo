@@ -57,7 +57,7 @@ public class TaskServiceTest {
     }
 
     @Test 
-    void findById_shouldReturnTaskWhenExists(){
+    void findById_shouldThrowExceptionWhenTaskDoesNotExist(){
         // Arrange
         TaskEntity entity = new TaskEntity();
         entity.setId(1L);
@@ -76,6 +76,12 @@ public class TaskServiceTest {
 
     @Test
     void findById_shouldThrowExceptionWhen(){
+        // Arrange
+        when(repository.findById(99L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThatThrownBy(() -> service.findById(99L))
+            .isInstanceOf(TaskNotFoundException.class);
 
     }
 

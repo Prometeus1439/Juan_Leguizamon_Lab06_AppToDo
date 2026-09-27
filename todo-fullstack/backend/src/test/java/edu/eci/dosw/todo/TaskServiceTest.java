@@ -60,7 +60,6 @@ public class TaskServiceTest {
         assertThat(responses).hasSize(1);
         assertThat(responses.get(0).getId()).isEqualTo(1L);
         assertThat(responses.get(0).getTitle()).isEqualTo("Study");
-
     }
 
     @Test 
@@ -84,7 +83,6 @@ public class TaskServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> service.findById(99L))
             .isInstanceOf(TaskNotFoundException.class);
-
     }
 
     @Test 
@@ -107,7 +105,6 @@ public class TaskServiceTest {
         assertThat(response.getDescription()).isEqualTo("Class study");
         assertThat(response.getPriority()).isEqualTo(TaskPriority.HIGH);
         assertThat(response.getDueDate()).isEqualTo(LocalDate.of(2026, 9, 30));
-
     }
 
     @Test 
@@ -165,12 +162,25 @@ public class TaskServiceTest {
 
     @Test 
     void delete_shouldDeleteExistingTask(){
+        // Arrange
+        when(repository.existsById(1L)).thenReturn(true);
+        
+        // Act
+        service.delete(1L);
 
+        // Assert
+        verify(repository).deleteById(1L);
     }
 
     @Test 
     void delete_shouldThrowExceptionWhenTaskDoesNotExist(){
-
+        // Arrange
+        when(repository.existsById(99L)).thenReturn(false);
+        
+        // Act & Assert
+        assertThatThrownBy(() -> service.delete(99L))
+            .isInstanceOf(TaskNotFoundException.class);
+        verify(repository, never()).deleteById(any());
     }
 
 }

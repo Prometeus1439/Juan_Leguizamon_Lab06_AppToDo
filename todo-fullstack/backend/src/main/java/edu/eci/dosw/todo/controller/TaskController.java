@@ -9,7 +9,6 @@ import edu.eci.dosw.todo.dto.TaskCreateRequest;
 import edu.eci.dosw.todo.dto.TaskResponse;
 import edu.eci.dosw.todo.dto.TaskUpdateRequest;
 import edu.eci.dosw.todo.service.TaskService;
-import jakarta.persistence.PostUpdate;
 import jakarta.validation.Valid;
 
 @RestController

@@ -1,0 +1,62 @@
+package edu.eci.dosw.todo.controller;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import edu.eci.dosw.todo.controller.TaskController;
+import edu.eci.dosw.todo.dto.TaskCreateRequest;
+import edu.eci.dosw.todo.dto.TaskResponse;
+import edu.eci.dosw.todo.dto.TaskUpdateRequest;
+import edu.eci.dosw.todo.entity.TaskPriority;
+import edu.eci.dosw.todo.entity.TaskStatus;
+import edu.eci.dosw.todo.exception.TaskNotFoundException;
+import edu.eci.dosw.todo.service.TaskService;
+import tools.jackson.databind.ObjectMapper;
+
+@WebMvcTest(TaskController.class)
+class TaskControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockitoBean
+    private TaskService service;
+
+    private TaskResponse sampleResponse;
+
+    @BeforeEach
+    void setUp() {
+        sampleResponse = new TaskResponse(1L, "Study", "Chapter 3", TaskStatus.PENDING,
+                TaskPriority.HIGH, LocalDate.of(2026, 9, 30), LocalDateTime.of(2026, 9, 27, 10, 0));
+    }
+
+    @Test
+    void findAll_shouldReturn200() throws Exception {
+        // Arrange
+        when(service.findAll()).thenReturn(List.of(sampleResponse));
+
+        // Act & Assert
+        mockMvc.perform(get("/api/v1/tasks"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("Study"));
+    }
+
+
+}

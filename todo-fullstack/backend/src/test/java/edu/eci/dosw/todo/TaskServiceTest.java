@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,15 +37,21 @@ public class TaskServiceTest {
     @InjectMocks 
     private TaskServiceImpl service;
 
+    private TaskEntity existingTask;
+
+    @BeforeEach
+    void setUp() {
+        existingTask = new TaskEntity();
+        existingTask.setId(1L);
+        existingTask.setTitle("Study");
+        existingTask.setStatus(TaskStatus.PENDING);
+        existingTask.setPriority(TaskPriority.MEDIUM);
+    }
+
     @Test 
     void findAll_shouldReturnTasks(){
         // Arrange
-        TaskEntity entity = new TaskEntity();
-        entity.setId(1L);
-        entity.setTitle("Study");
-        entity.setStatus(TaskStatus.PENDING);
-        entity.setPriority(TaskPriority.MEDIUM);
-        when(repository.findAll()).thenReturn(List.of(entity));
+        when(repository.findAll()).thenReturn(List.of(existingTask));
         
         // Act
         List<TaskResponse> responses = service.findAll();
@@ -59,12 +66,7 @@ public class TaskServiceTest {
     @Test 
     void findById_shouldReturnTaskWhenExists(){
         // Arrange
-        TaskEntity entity = new TaskEntity();
-        entity.setId(1L);
-        entity.setTitle("Study");
-        entity.setStatus(TaskStatus.PENDING);
-        entity.setPriority(TaskPriority.MEDIUM);
-        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        when(repository.findById(1L)).thenReturn(Optional.of(existingTask));
 
         // Act 
         TaskResponse response = service.findById(1L);
@@ -131,6 +133,22 @@ public class TaskServiceTest {
 
     @Test 
     void update_shouldUpdateExistingTask(){
+        // Arrange
+        TaskUpdateRequest request = new TaskUpdateRequest("Study hard", "Chapter 4", TaskStatus.IN_PROGRESS, TaskPriority.HIGH, LocalDate.of(2026, 10, 5));
+        when(repository.findById(1L)).thenReturn(Optional.of(existingTask));
+        when(repository.save(any(TaskEntity.class))).thenAnswer(invocation ->
+            invocation.getArgument(0) 
+        );
+
+        // Act
+        TaskResponse response = service.update(1L, request);
+
+        // Assert
+        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getTitle()).isEqualTo("Study hard");
+        assertThat(response.getDescription()).isEqualTo("Chapter 4");
+        assertThat(response.getStatus()).isEqualTo(TaskStatus.IN_PROGRESS);
+        assertThat(response.getPriority()).isEqualTo(TaskPriority.HIGH);
 
     }
 

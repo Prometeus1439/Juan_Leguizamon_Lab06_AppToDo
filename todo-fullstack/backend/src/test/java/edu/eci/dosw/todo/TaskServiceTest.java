@@ -1,12 +1,10 @@
 package edu.eci.dosw.todo;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +27,7 @@ import edu.eci.dosw.todo.service.TaskServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 
-public class TaskServiceTest {
+class TaskServiceTest {
     
     @Mock
     private TaskRepository repository;

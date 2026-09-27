@@ -11,7 +11,6 @@ import edu.eci.dosw.todo.entity.TaskPriority;
 import edu.eci.dosw.todo.entity.TaskStatus;
 import edu.eci.dosw.todo.exception.TaskNotFoundException;
 import edu.eci.dosw.todo.repository.TaskRepository;
-import edu.eci.dosw.todo.service.TaskService;
 
 public class TaskServiceImpl implements TaskService{
 

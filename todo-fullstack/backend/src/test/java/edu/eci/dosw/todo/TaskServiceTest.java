@@ -110,7 +110,23 @@ public class TaskServiceTest {
 
     @Test 
     void create_shouldAssignDefaultStatus(){
+        // Arrange
+        TaskCreateRequest request = new TaskCreateRequest("Study", "Class study", null, null);
 
+        when(repository.save(any(TaskEntity.class))).thenAnswer(invocation -> {
+            TaskEntity entity = invocation.getArgument(0);
+            entity.setId(1L);
+            return entity;
+        });
+
+        // Act
+        TaskResponse response = service.create(request);
+
+        // Assert
+        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getPriority()).isEqualTo(TaskPriority.MEDIUM);
+        assertThat(response.getStatus()).isEqualTo(TaskStatus.PENDING);
+        assertThat(response.getCreatedAt()).isNotNull();
     }
 
     @Test 

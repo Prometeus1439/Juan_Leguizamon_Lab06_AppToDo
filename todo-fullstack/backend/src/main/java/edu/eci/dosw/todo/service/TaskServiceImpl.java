@@ -3,6 +3,8 @@ package edu.eci.dosw.todo.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import edu.eci.dosw.todo.dto.TaskCreateRequest;
 import edu.eci.dosw.todo.dto.TaskResponse;
 import edu.eci.dosw.todo.dto.TaskUpdateRequest;
@@ -12,6 +14,7 @@ import edu.eci.dosw.todo.entity.TaskStatus;
 import edu.eci.dosw.todo.exception.TaskNotFoundException;
 import edu.eci.dosw.todo.repository.TaskRepository;
 
+@Service 
 public class TaskServiceImpl implements TaskService{
 
     private final TaskRepository repository;

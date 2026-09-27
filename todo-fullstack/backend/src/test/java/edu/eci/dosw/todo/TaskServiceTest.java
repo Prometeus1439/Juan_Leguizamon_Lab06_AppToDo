@@ -154,7 +154,13 @@ public class TaskServiceTest {
 
     @Test 
     void update_shouldThrowExceptionWhenTaskDoesNotExist(){
+        // Arrange
+        TaskUpdateRequest request = new TaskUpdateRequest("Study hard", "Chapter 4", TaskStatus.IN_PROGRESS, TaskPriority.HIGH, LocalDate.of(2026, 10, 5));
+        when(repository.findById(99L)).thenReturn(Optional.empty());
 
+        // Act & Assert
+        assertThatThrownBy(() -> service.update(99L, request))
+            .isInstanceOf(TaskNotFoundException.class);
     }
 
     @Test 

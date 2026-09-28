@@ -1,4 +1,4 @@
-package edu.eci.dosw.todo.controller;
+package edu.eci.dosw.todo;
 
 import static org.mockito.Answers.values;
 import static org.mockito.ArgumentMatchers.any;
@@ -130,6 +130,18 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.status").value("IN_PROGRESS"));
     }
 
-    
+    @Test
+    void update_shouldReturn404WhenTaskDoesNotExist() throws Exception {
+        // Arrange
+        TaskUpdateRequest request = new TaskUpdateRequest("Study", "Chapter 3", TaskStatus.IN_PROGRESS, TaskPriority.HIGH, LocalDate.of(2026, 9, 30));        
+        when(service.update(eq(99L), any(TaskUpdateRequest.class))).thenThrow(new TaskNotFoundException(99L));
+
+        // Act & Assert
+        mockMvc.perform(put("/api/v1/tasks/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(containsString("Task with id 99 was not found")));
+    }
 
 }

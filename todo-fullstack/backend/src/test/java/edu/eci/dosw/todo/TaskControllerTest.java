@@ -27,6 +27,7 @@ import edu.eci.dosw.todo.entity.TaskStatus;
 import edu.eci.dosw.todo.exception.TaskNotFoundException;
 import edu.eci.dosw.todo.service.TaskService;
 import tools.jackson.databind.ObjectMapper;
+import static org.hamcrest.Matchers.containsString;
 
 @WebMvcTest(TaskController.class)
 class TaskControllerTest {
@@ -96,6 +97,21 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.title").value("Study"))
                 .andExpect(jsonPath("$.id").value(1));
 
+    }
+
+    @Test
+    void create_shouldReturn400WhenRequestIsInvalid() throws Exception {
+        // Arrange
+            TaskCreateRequest request = new TaskCreateRequest(null, "Chapter 3", TaskPriority.HIGH, LocalDate.of(2026, 9, 30));
+
+        // Act & Assert
+        mockMvc.perform(post("/api/v1/tasks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value(containsString("title")));
+
+                verify(service, never()).create(any());
     }
 
 }

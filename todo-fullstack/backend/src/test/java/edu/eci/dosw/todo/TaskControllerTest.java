@@ -58,5 +58,18 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Study"));
     }
 
+    @Test
+    void findById_shouldReturn200WhenTaskExists() throws Exception {
+        // Arrange
+        when(service.findById(1L)).thenReturn(sampleResponse);
+
+        // Act & Assert
+        mockMvc.perform(get("/api/v1/tasks/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.title").value("Study"))
+            .andExpect(jsonPath("$.id").value(1));
+    }
+
+    
 
 }

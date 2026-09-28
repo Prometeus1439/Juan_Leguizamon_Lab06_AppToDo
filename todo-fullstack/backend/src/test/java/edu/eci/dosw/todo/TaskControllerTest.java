@@ -1,5 +1,6 @@
 package edu.eci.dosw.todo.controller;
 
+import static org.mockito.Answers.values;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -70,6 +71,15 @@ class TaskControllerTest {
             .andExpect(jsonPath("$.id").value(1));
     }
 
-    
+    @Test
+    void findById_shouldReturn404WhenTaskDoesNotExist() throws Exception {
+        // Arrange
+        when(service.findById(99L)).thenThrow(new TaskNotFoundException(99L));
+
+        // Act & Assert
+        mockMvc.perform(get("/api/v1/tasks/99"))
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value("Task with id 99 was not found"));
+    }
 
 }

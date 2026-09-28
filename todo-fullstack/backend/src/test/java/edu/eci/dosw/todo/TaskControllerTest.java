@@ -2,6 +2,7 @@ package edu.eci.dosw.todo.controller;
 
 import static org.mockito.Answers.values;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -113,5 +114,22 @@ class TaskControllerTest {
 
                 verify(service, never()).create(any());
     }
+
+    @Test
+    void update_shouldReturn200WhenTaskExists() throws Exception {
+        // Arrange
+        TaskUpdateRequest request = new TaskUpdateRequest("Study", "Chapter 3", TaskStatus.IN_PROGRESS, TaskPriority.HIGH, LocalDate.of(2026, 9, 30));        
+        TaskResponse updated = new TaskResponse(1L, "Study", "Chapter 3", TaskStatus.IN_PROGRESS, TaskPriority.HIGH, LocalDate.of(2026, 9, 30), LocalDateTime.of(2026, 9, 27, 10, 0));
+        when(service.update(eq(1L), any(TaskUpdateRequest.class))).thenReturn(updated);
+
+        // Act & Assert
+        mockMvc.perform(put("/api/v1/tasks/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("IN_PROGRESS"));
+    }
+
+    
 
 }

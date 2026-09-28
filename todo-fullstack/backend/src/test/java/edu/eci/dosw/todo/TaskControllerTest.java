@@ -1,6 +1,5 @@
 package edu.eci.dosw.todo;
 
-import static org.mockito.Answers.values;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -142,6 +141,15 @@ class TaskControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(containsString("Task with id 99 was not found")));
+    }
+
+    @Test
+    void delete_shouldReturn204WhenTaskExists() throws Exception {
+        // Act & Assert
+        mockMvc.perform(delete("/api/v1/tasks/1"))
+                .andExpect(status().isNoContent());
+
+        verify(service).delete(1L);
     }
 
 }

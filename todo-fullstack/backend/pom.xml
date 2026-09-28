@@ -103,13 +103,12 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
-							<haltOnFailure>false</haltOnFailure>
 							<rules>
 								<rule>
 									<element>BUNDLE</element>
 									<limits>
 										<limit>
-											<counter>LINE</counter>
+											<counter>INSTRUCTION</counter>
 											<value>COVEREDRATIO</value>
 											<minimum>0.80</minimum>
 										</limit>

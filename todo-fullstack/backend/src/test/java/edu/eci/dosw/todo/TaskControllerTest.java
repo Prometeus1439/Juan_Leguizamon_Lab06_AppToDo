@@ -82,4 +82,20 @@ class TaskControllerTest {
             .andExpect(jsonPath("$.message").value("Task with id 99 was not found"));
     }
 
+    @Test
+    void create_shouldReturn201WhenRequestIsValid() throws Exception {
+        // Arrange
+        TaskCreateRequest request = new TaskCreateRequest("Study", "Chapter 3", TaskPriority.HIGH, LocalDate.of(2026, 9, 30));
+        when(service.create(any(TaskCreateRequest.class))).thenReturn(sampleResponse);
+
+        // Act & Assert
+        mockMvc.perform(post("/api/v1/tasks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title").value("Study"))
+                .andExpect(jsonPath("$.id").value(1));
+
+    }
+
 }

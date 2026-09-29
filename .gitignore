@@ -30,3 +30,8 @@ bin/
 node_modules/
 dist/
 coverage/
+
+# Postman: keep only the collection files
+postman/*
+!postman/collections/
+.postman/

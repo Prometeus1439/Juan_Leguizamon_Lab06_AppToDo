@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://localhost:8080/api/v1/tasks
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"title\": \"\",\r
+
+    \    \"description\": \"Sin titulo\",\r
+
+    \    \"priority\": \"LOW\"\r
+
+    }"
+order: 4456077532659310

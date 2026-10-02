@@ -11,17 +11,53 @@ export async function getTasks() {
 }
 
 export async function getTask(id) {
-    // TODO
+    const response = await fetch(`${API_URL}/${id}`);
+
+    if (!response.ok){
+        const error = await response.json();
+        throw new Error(error.message);
+    }
+
+    return response.json();
 }
 
 export async function createTask(task) {
-    // TODO
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
 }
 
 export async function updateTask(id, task) {
-    // TODO
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
 }
 
 export async function deleteTask(id) {
-    // TODO
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
 }

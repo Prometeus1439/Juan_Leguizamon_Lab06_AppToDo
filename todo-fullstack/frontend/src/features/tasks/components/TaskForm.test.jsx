@@ -43,7 +43,7 @@ describe("TaskForm", () => {
 
   });
 
-  test("excecutes save action", async () => {
+  test("executes save action", async () => {
     //Arrange
     const onSave = vi.fn();
     render(<TaskForm onSave={onSave} />);

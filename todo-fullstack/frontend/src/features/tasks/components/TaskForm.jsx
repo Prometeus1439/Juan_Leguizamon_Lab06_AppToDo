@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function TaskForm({ onSave }) {
+export default function TaskForm({ onSave, task }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("MEDIUM");
   const [dueDate, setDueDate] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+  if (task) {
+    setTitle(task.title);
+    setDescription(task.description ?? "");
+    setPriority(task.priority);
+    setDueDate(task.dueDate ?? "");
+    }
+  }, [task]);
 
   function handleTitleChange(e) {
     setTitle(e.target.value);
@@ -79,7 +88,7 @@ export default function TaskForm({ onSave }) {
 
       {error !== "" ? <p role="alert">{error}</p> : null}
 
-      <button type="submit">Guardar</button>
+      <button type="submit">{task ? "Actualizar" : "Guardar"}</button>
     </form>
   );
 }

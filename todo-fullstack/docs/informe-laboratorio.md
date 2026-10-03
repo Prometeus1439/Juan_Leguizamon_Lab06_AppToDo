@@ -133,7 +133,7 @@ No implementado.
 - `TaskControllerTest`: 8 pruebas con MockMvc (los 8 casos mínimos), con el `TaskService` simulado.
 - `TodoApplicationTests.contextLoads`: verifica que la aplicación arranque y se conecte a PostgreSQL.
 
-**Cobertura JaCoCo:** [XX] % de instrucciones. El `pom.xml` incluye una regla que hace fallar el build si la cobertura baja del 80 %. Los paquetes `service`, `controller`, `entity` y `exception` tienen 100 %.
+**Cobertura JaCoCo:** [85] % de instrucciones. El `pom.xml` incluye una regla que hace fallar el build si la cobertura baja del 80 %. Los paquetes `service`, `controller`, `entity` y `exception` tienen 100 %.
 
 **Front-end** (`npx vitest run`): 8 pruebas, todas exitosas.
 
@@ -304,4 +304,4 @@ El usuario interactúa con los componentes de React, que no conocen la API: solo
 
 ## 8. Video de demostración
 
-[ENLACE AL VIDEO]
+[Ver video de demostración en YouTube](https://youtu.be/unN0p0413Vk)

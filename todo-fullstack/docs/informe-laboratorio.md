@@ -11,7 +11,7 @@
 
 ## 2. Repositorio
 
-- [ENLACE AL REPOSITORIO]
+- [\[ENLACE AL REPOSITORIO\]](https://github.com/Prometeus1439/Juan_Leguizamon_Lab06_AppToDo.git)
 
 ## 3. Descripción de la solución
 

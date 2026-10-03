@@ -1,3 +1,4 @@
+# Maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -10,8 +11,27 @@ buildNumber.properties
 # https://maven.apache.org/tools/wrapper/#Usage_with_or_without_Binary_JAR
 .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
+# Eclipse / Java extension files
 .project
-# JDT-specific (Eclipse Java Development Tools)
 .classpath
+.settings/
+.factorypath
+bin/
+
+# Editors
+.vscode/
+.idea/
+*.iml
+
+# Node / React / Vite
+node_modules/
+dist/
+coverage/
+
+# Vitest
+.vitest/
+
+# Postman: keep only the collection files
+postman/*
+!postman/collections/
+.postman/

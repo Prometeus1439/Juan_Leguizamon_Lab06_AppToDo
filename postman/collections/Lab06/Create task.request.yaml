@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: http://localhost:8080/api/v1/tasks
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"title\": \"Preparar parcial\",\r
+
+    \    \"description\": \"Repasar JPA y Spring\",\r
+
+    \    \"priority\": \"MEDIUM\",\r
+
+    \    \"dueDate\": \"2026-10-05\"\r
+
+    }"
+order: 1790629221009

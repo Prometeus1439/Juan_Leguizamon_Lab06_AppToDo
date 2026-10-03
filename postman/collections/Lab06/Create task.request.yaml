@@ -6,13 +6,13 @@ body:
   type: json
   content: "{\r
 
-    \    \"title\": \"Terminar laboratorio DOSW\",\r
+    \    \"title\": \"Preparar parcial\",\r
 
-    \    \"description\": \"Completar pruebas del backend\",\r
+    \    \"description\": \"Repasar JPA y Spring\",\r
 
-    \    \"priority\": \"HIGH\",\r
+    \    \"priority\": \"MEDIUM\",\r
 
-    \    \"dueDate\": \"2026-09-30\"\r
+    \    \"dueDate\": \"2026-10-05\"\r
 
     }"
 order: 1790629221009
